@@ -1,0 +1,28 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+int main() {
+
+   SetConsoleOutputCP (CP_UTF8);
+
+    string Nombre;
+    int Nivel;
+    bool Vivo = true;
+    float Velocidad = 0.8f;
+
+    cout << "Ingrese el nombre del jugador: " << endl;
+    cin >> Nombre;
+
+    cout << "Nivel inicial: " << endl;
+    cin >> Nivel;
+
+    cout << "===Ficha de personaje===" << endl;
+    cout << "Nombre: " << Nombre << endl;
+    cout << "Nivel: " << Nivel << endl;
+    cout << "Vidas: " << Vivo << endl;
+    cout << "Velocidad: " << Velocidad << endl;
+    
+    return 0;
+
+}

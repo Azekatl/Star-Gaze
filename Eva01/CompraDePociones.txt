@@ -1,0 +1,28 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+int main() {
+
+   SetConsoleOutputCP (CP_UTF8);
+    
+    int monedas;
+    int precio = 1;
+    int pocion;
+    int total;
+
+    cout << "Precio de una poción básica 1 moneda de oro " << endl;
+
+    cout << "Ingrese cantidad de monedas: ";
+    cin >> monedas;
+    
+    total = monedas - precio;
+
+    //Olvide como hacer matematicas para esto AAAAAAAAA perdonar
+
+    cout << precio << endl;
+    cout << monedas << endl;
+    cout << total << endl;
+    
+    return 0;
+}

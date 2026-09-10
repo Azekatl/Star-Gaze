@@ -1,0 +1,24 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+int main() {
+
+    SetConsoleOutputCP (CP_UTF8);
+
+    string Nombre;
+    int Nivel;
+    
+    cout << "Ingrese el nombre del jugador: " << endl;
+    cin >> Nombre;
+    cout << "Nivel inicial: " << endl;
+    cin >> Nivel;
+
+    if (Nivel >= 10) {
+    cout << "===|Zona abierta, el jugador podrá continuar|=== ";
+    } else {
+    cout << "===|Zona bloqueda por falta de nivel, regrese cuando sea al menos nivel 10|===";
+    }
+
+    return 0;
+}
