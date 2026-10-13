@@ -1,5 +1,8 @@
 #include <iostream>
 #include <windows.h>
+#include <cstdlib>
+#include <vector>
+
 using namespace std;
 
 int main() {
