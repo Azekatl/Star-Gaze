@@ -8,229 +8,220 @@ using namespace std;
 
 class Equipamiento
 {
-    private:
-        string nombreItem;
-        string descripcionItem;
-        int calidadItem;
-        int vidaItem;
-    public:
-        Equipamiento(string nombre,string descripcion,int calidad,int cantidadUso,int vida): 
-        nombreItem(nombre), descripcionItem(descripcion), calidadItem(calidad), vidaItem(vida){}
-        
-        string obtenerNombreItem() { return nombreItem;}
+private:
+string nombreItem;
+string descripcionItem;
+int calidadItem;
+public:
+Equipamiento(string nombre,string descripcion,int calidad,int cantidadUso):
+nombreItem(nombre), descripcionItem(descripcion), calidadItem(calidad){}
+string obtenerNombreItem() { return nombreItem;}
 };
 
 class Personaje{
-    private:
-        string nombrePersonaje;
-        int vidaPersonaje;
-        bool personajeVivo;
-        int danioPersonaje;
-        vector<Equipamiento> items;
+private:
+    string nombrePersonaje;
+    int vidaPersonaje;
+    bool personajeVivo;
+    int danioPersonaje;
+    vector<Equipamiento> items;
+public:
+    Personaje(string nombreJugador,int vidaJugador,bool estaVivo,int danioJugador):
+    nombrePersonaje(nombreJugador), vidaPersonaje(vidaJugador), personajeVivo(estaVivo), danioPersonaje(danioJugador){}
+    void avanzar(string nombrePersonaje)
 
-    public:
-        Personaje(string nombreJugador,int vidaJugador,bool estaVivo,int danioJugador):
-        nombrePersonaje(nombreJugador), vidaPersonaje(vidaJugador), personajeVivo(estaVivo), danioPersonaje(danioJugador){}
+    {
+    cout << nombrePersonaje << " avanza con precaución" << endl;
+    }
+void recibirDanio(string nombrePersonaje, int danio)
+{
+vidaPersonaje -= danio;
+if (vidaPersonaje < 0)
+{
+vidaPersonaje = 0;
+personajeVivo = false;
 
-        void avanzar(string nombrePersonaje)
-        {
-        cout << nombrePersonaje << " avanza con precaución" << endl;
-        }
-
-        void recibirDanio(string nombrePersonaje, int danio)
-        {
-            vidaPersonaje -= danio;
-
-            if (vidaPersonaje < 0)
-            {
-                vidaPersonaje = 0;
-                personajeVivo = false;
-            }
-
-            cout << nombrePersonaje << " recibió " << danio << " de daño." << endl;
-            cout << "Su vida restante es " << vidaPersonaje << "." << endl;
-        }
-
-        void verEstado(string nombrePersonaje)
-        {
-            string alerta = "";
-            if (0 < vidaPersonaje && vidaPersonaje <= 30)
-            {
-                alerta = "Vida demasiado baja!";
-            }
-            else
-            {
-                alerta = "";
-            }
-
-            cout << "Estado de " << nombrePersonaje << endl;
-            cout << "Vida restante: " << vidaPersonaje << endl;
-            cout << "Está Vivo? " << (personajeVivo == true ? "Si" : "No") << endl;
-            cout << alerta << endl;
-        }
-
-        void obtenerEquipamiento(Equipamiento item){
-            if(items.size() <= 6){
-                items.push_back(item);
-                cout << "Item obtenido: " << item.obtenerNombreItem() << endl;
-            }
-        }
-
-        virtual void atacar(){};
-
+}
+cout << nombrePersonaje << " recibió " << danio << " de daño." << endl;
+cout << "La vida que le queda es " << vidaPersonaje << "!" << endl;
+}
+void verEstado(string nombrePersonaje)
+{
+string alerta = "";
+if (0 < vidaPersonaje && vidaPersonaje <= 25)
+{
+alerta = "Vida demasiado baja!";
+}
+else
+{
+alerta = "";
+}
+cout << "Estado actual de " << nombrePersonaje << endl;
+cout << "Vida restante: " << vidaPersonaje << endl;
+cout << "Está Vivo? " << (personajeVivo == true ? "Si" : "No") << endl;
+cout << alerta << endl;
+}
+void obtenerEquipamiento(Equipamiento item){
+if(items.size() <= 6){
+items.push_back(item);
+cout << "Item obtenido: " << item.obtenerNombreItem() << endl;
+}
+}
+virtual void atacar(){};
 };
 
 //herencia
-class Guerrero : public Personaje
+class Berserk : public Personaje
 {
-    private:
-        string arma;
-        string armadura;
-    public:
-        Guerrero(string nombreJugador,int vidaJugador,bool estaVivo,int danioJugador, string armaGuerrero, string armaduraGuerrero):
-            Personaje(nombreJugador, vidaJugador, estaVivo, danioJugador),
-            arma(armaGuerrero), armadura(armaduraGuerrero){}
-
-        void atacar()override{
-            cout << "Ataca con " << arma << endl;
-        }
+private:
+string arma;
+string cyberware;
+public:
+Berserk(string nombreJugador,int vidaJugador,bool estaVivo,int danioJugador,string armaBerserk,string cyberwareBerserk):
+Personaje(nombreJugador, vidaJugador, estaVivo, danioJugador),
+arma(armaBerserk), cyberware(cyberwareBerserk){}
+void atacar()override{
+cout << "Su choom atacó con " << arma << "." << endl;
+}
 };
 
-class Arquero : public Personaje
+class Mercenario : public Personaje
 {
-    private:
-        string arma;
-        string armadura;
-    public:
-        Arquero(string nombreJugador,int vidaJugador,bool estaVivo,int danioJugador, string armaArquero, string armaduraArquero):
-            Personaje(nombreJugador, vidaJugador, estaVivo, danioJugador),
-            arma(armaArquero), armadura(armaduraArquero){}
-
-        void atacar()override{
-            cout << "Ataca con " << arma << endl;
-        }
+private:
+string arma;
+string armadura;
+public:
+Mercenario(string nombreJugador,int vidaJugador,bool estaVivo,int danioJugador,string armaMercenario,string cyberwareMercenario):
+Personaje(nombreJugador, vidaJugador, estaVivo, danioJugador),
+arma(armaMercenario), armadura(cyberwareMercenario){}
+void atacar()override{
+cout << "Su choom atacó con " << arma << "." << endl;
+}
 };
 
-class Mago : public Personaje
+class Netrunner : public Personaje
 {
-    private:
-        string arma;
-        string armadura;
-    public:
-        Mago(string nombreJugador,int vidaJugador,bool estaVivo,int danioJugador, string armaMago, string armaduraMago):
-            Personaje(nombreJugador, vidaJugador, estaVivo, danioJugador),
-            arma(armaMago), armadura(armaduraMago){}
-            
-        void atacar()override{
-            cout << "Ataca con " << arma << endl;
-        }
+private:
+string arma;
+string cyberware;
+public:
+Netrunner(string nombreJugador,int vidaJugador,bool estaVivo,int danioJugador,string armaNetrunner,string cyberwareNetrunner):
+Personaje(nombreJugador, vidaJugador, estaVivo, danioJugador),
+arma(armaNetrunner), cyberware(cyberwareNetrunner){}
+void atacar()override{
+cout << "Su choom atacó con " << arma << "." << endl;
+}
 };
+
 
 int main()
 {
-    SetConsoleOutputCP(CP_UTF8);
 
-    // Datos Personaje
-    int opcion = 0;
-    int tipoPersonaje = 0;
-    string nombrePersonaje = "";
-    int vidaPersonaje = 0;
-    bool personajeVivo = true;
-    int danioPersonaje = 0;
-    Personaje* jugador = nullptr;
+SetConsoleOutputCP(CP_UTF8);
 
-    // Datos Equipamiento
-    string nombreEquipamiento = "Pergamino de Fuerza";
-    string descripcionEquipamiento = "Aumenta la fuerza del personaje en 10";
-    int calidadEquipamiento = 10;
-    int cantidadUso = 1;
-    int vidaEquipamiento = 0;
+    ////estoy como los programadores de valve, volviéndome loco
+    //variables base para el personaje que se utilizará
 
-    // Datos Tipo Guerrero
-    string armaSeleccionada;
-    string armaduraSeleccionada;
+        int opcion = 0;
+        int tipoPersonaje = 0;
+        string nombrePersonaje = "";
+        int vidaPersonaje = 0;
+        bool personajeVivo = true;
+        int danioPersonaje = 0;
+        Personaje* jugador = nullptr;
 
-    cout << "Indique el nombre de su personaje: " << endl;
-    getline(cin, nombrePersonaje);
-    cout << "Indique la vida incial de " << nombrePersonaje << ":" << endl;
-    cin >> vidaPersonaje;
+    //variables para el equipo qué tendrán el choom
+        string nombreEquipamiento = "Núcleo Mecatrónico";
+        string descripcionEquipamiento = "Da un bonus de daño del personaje en 10 desde la corteza cerebral";
+        int calidadEquipamiento = 7;
+        int cantidadUso = 2;
 
-    cout << "Qué tipo de personaje será " << nombrePersonaje << "?" << endl;
-    cout << "\nSeleccione su opción" << endl;
-        cout << "[1] Guerrero." << endl;
-        cout << "[2] Arquero." << endl;
-        cout << "[3] Mago." << endl;
-    cin >> tipoPersonaje;
+    //variables para arma y el cyberware
+        string armaSeleccionada;
+        string cyberwareSeleccionado;
 
-    switch (tipoPersonaje)
-    {
-        case 1:
-            armaSeleccionada = "Alabarda Témpano de Azufre";
-            armaduraSeleccionada = "Armadura de Malla";
-            jugador = new Guerrero(nombrePersonaje,vidaPersonaje,personajeVivo,danioPersonaje,armaSeleccionada,armaduraSeleccionada);
-            cout << nombrePersonaje << " ahora es un Guerrero" << endl;
-            cout << "Se protege con su " << armaduraSeleccionada << " y ataca con su " << armaSeleccionada << endl;
-            break;
+    //información inicial como nombre y vida
+        cout << "Indique el nombre de su personaje: " << endl;
+        getline(cin, nombrePersonaje);
+        cout << "Indique la vida incial de " << nombrePersonaje << ":" << endl;
+        cin >> vidaPersonaje;
+
+    //inicio de selección de clases
+        cout << "Choom, no hay orígenes en esté caso, así que tendrá que elegir entre 3 clases distintas" << endl;
+        cout << "Seleccione su clase" << endl;
+        cout << "[1] Berserk." << endl;
+        cout << "[2] Mercenario." << endl;
+        cout << "[3] Netrunner." << endl;
+        cin >> tipoPersonaje;
+        switch (tipoPersonaje)
+
+{
+    case 1:
+        armaSeleccionada = "Martillo";
+        cyberwareSeleccionado = "Brazos de gorila";
+        jugador = new Berserk(nombrePersonaje,vidaPersonaje,personajeVivo,danioPersonaje,armaSeleccionada,cyberwareSeleccionado);
+        cout << nombrePersonaje << " ahora es un Berserk loco" << endl;
+        cout << "Hará uso del cyberware " << cyberwareSeleccionado << " y sin piedad hará uso de su " << armaSeleccionada << endl;
+        break;
 
         case 2:
-            armaSeleccionada = "Hell's Poison Crossbow";
-            armaduraSeleccionada = "Ghillie Suit";
-            jugador = new Arquero(nombrePersonaje,vidaPersonaje,personajeVivo,danioPersonaje,armaSeleccionada,armaduraSeleccionada);
-            cout << nombrePersonaje << " ahora es un Arquero" << endl;
-            cout << "Se protege con su " << armaduraSeleccionada << " y ataca con su " << armaSeleccionada << endl;
+            armaSeleccionada = "Guts"; 
+            cyberwareSeleccionado = "Militech Apoge";
+            jugador = new Mercenario(nombrePersonaje,vidaPersonaje,personajeVivo,danioPersonaje,
+            armaSeleccionada,cyberwareSeleccionado);
+            cout << nombrePersonaje << " ahora es un Mercenario intrepido" << endl;
+            cout << "Hará uso del cyberware " << cyberwareSeleccionado << " y despedazará con su " << armaSeleccionada << endl;
             break;
-
-        case 3:
-            armaSeleccionada = "Necronomicón";
-            armaduraSeleccionada = "Hechizo de Protección";
-            jugador = new Mago(nombrePersonaje,vidaPersonaje,personajeVivo,danioPersonaje,armaSeleccionada,armaduraSeleccionada);
-            cout << nombrePersonaje << " ahora es un Mago" << endl;
-            cout << "Se protege con su " << armaduraSeleccionada << " y ataca con su " << armaSeleccionada << endl;
-            break;
-    }
     
-    // Personaje jugador(nombrePersonaje, vidaPersonaje, personajeVivo, danioPersonaje);
-    Equipamiento pergamino(nombreEquipamiento,descripcionEquipamiento,calidadEquipamiento,cantidadUso,vidaEquipamiento);
-
-    while (opcion != 6 && personajeVivo)
-    {
-        cout << "\nSeleccione su opción" << endl;
-        cout << "[1] Avanzar." << endl;
-        cout << "[2] Recibir Daño." << endl;
-        cout << "[3] Revisar Estado " << nombrePersonaje << "." << endl;
-        cout << "[4] Entregar Pergamino." << endl;
-        cout << "[5] Atacar." << endl;
-        cout << "[6] Salir." << endl;
-        cin >> opcion;
-
-        switch (opcion)
-        {
-            case 1:
-                jugador->avanzar(nombrePersonaje);
-                break;
-            case 2:
-                cout << "Ingrese el daño a recibir: " << endl;
-                cin >> danioPersonaje;
-                jugador->recibirDanio(nombrePersonaje,danioPersonaje);
-                break;
             case 3:
+                armaSeleccionada = "Monocable térmico";
+                cyberwareSeleccionado = "Militech Mk 5";
+                jugador = new Netrunner(nombrePersonaje,vidaPersonaje,personajeVivo,danioPersonaje,armaSeleccionada,cyberwareSeleccionado);
+                cout << nombrePersonaje << " ahora es un Netrunner especializado" << endl;
+                cout << "Hará uso del cyberware" << cyberwareSeleccionado << ", cortará y quemará con su " << armaSeleccionada << endl;
+                break;
+ }
+
+            // Personaje jugador(nombrePersonaje, vidaPersonaje, personajeVivo, danioPersonaje);
+    Equipamiento nucleo(nombreEquipamiento,descripcionEquipamiento,calidadEquipamiento,cantidadUso);
+
+ {
+    cout << "\nSeleccione su opción" << endl;
+    cout << "[1] Moverse adelante." << endl;
+    cout << "[2] Recibir daño." << endl;
+    cout << "[3] Revisar estado " << nombrePersonaje << "." << endl;
+    cout << "[4] Atacar." << endl;
+    cout << "[5] Salir." << endl;
+    cin >> opcion;
+    switch (opcion)
+
+    {
+        case 1:
+        jugador->avanzar(nombrePersonaje);
+        break;
+            case 2:
+            cout << "Ingrese el daño a recibir: " << endl;
+            cin >> danioPersonaje;
+            jugador->recibirDanio(nombrePersonaje,danioPersonaje);
+            break;
+                case 3:
                 jugador->verEstado(nombrePersonaje);
                 break;
-            case 4:
-                cout << "Encontramos un pergamino de fuerza..." << endl;
-                jugador->obtenerEquipamiento(pergamino);
-                break;
-            case 5:
-                jugador->atacar();
-                break;
-            case 6:
-                cout << "Saliendo..." << endl;
-                exit(0);
-                break;
-            default:
-                cout << "Opción ingresada NO corresponde...\nIntente nuevamente..." << endl;
-        }
-    }
+                    break;
+                        case 4:
+                        jugador->atacar();
+                        break;
+                            case 5:
+                            cout << "Saliendo..." << endl;
+                                exit(0);
+                                break;
+                                default:
+                                cout << "Intente con una opción valida, carne fresca" << endl;
+                    }
+ //no tuve motivación para ver el tema de equipamiento o hacer esto de manera general
+ // mi error por ello algo debo entregar al menos aunque no este completo
+ 
+}
+return 0;
 
-    return 0;
 }
